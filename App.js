@@ -1,21 +1,52 @@
-import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View } from 'react-native';
+
+import { useState } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import GoalInput from './component/GoalInput';
+import GoalItem from './component/GoalItem';
+
 
 export default function App() {
+
+  const [courseGoal, setCourseGoal] = useState([]);
+
+
+
+  function addGoalHolder(enterGoalText) {
+    setCourseGoal(cuurrentcourseGoal => [...cuurrentcourseGoal, enterGoalText]);
+    //globalInputHolder(''); 
+  }
   return (
-    <View style={styles.container}>
-      <Text style={{borderColor: "blue", borderWidth: 2, padding:10, borderRadius: 15, backgroundColor: "#2f6ff3", margin: 10}}>Open up App.js to start working My yea app!</Text>
-      <Button title='Tap me again!'></Button>
-      <StatusBar style="auto" />
+    <View style={styles.appContainer}>
+
+      <GoalInput onAddGoal={addGoalHolder} />
+
+      <View style={{ marginBottom: 30}}>
+        <FlatList
+          data={courseGoal}
+          renderItem={(itemData) => {
+            return (
+              <GoalItem value={itemData.item} />
+            );
+          }}
+          keyExtractor={(item, index) => {
+            return index;
+          }}
+          alwaysBounceVertical={false}
+        />
+      </View>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#5ff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  appContainer: {
+    //flex: 1,
+    paddingTop: 50,
+    paddingHorizontal: 16,
+    paddingBottom: 100,
   },
+
+
+
 });
