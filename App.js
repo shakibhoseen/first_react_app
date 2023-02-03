@@ -15,6 +15,19 @@ export default function App() {
     setCourseGoal(cuurrentcourseGoal => [...cuurrentcourseGoal, enterGoalText]);
     //globalInputHolder(''); 
   }
+
+
+  function onDeleteItem(index) {
+    console.log("delete"+ index);
+    const arr = [];
+
+    for (let i = 0, p=0; i < courseGoal.length; i++) {
+      if(index==i) continue;
+      arr[p] = courseGoal[i];
+      p++;
+    }
+    setCourseGoal(arr);
+  }
   return (
     <View style={styles.appContainer}>
 
@@ -25,7 +38,7 @@ export default function App() {
           data={courseGoal}
           renderItem={(itemData) => {
             return (
-              <GoalItem value={itemData.item} />
+              <GoalItem value={itemData.item} onDeleteItem={onDeleteItem}  index={itemData.index} />
             );
           }}
           keyExtractor={(item, index) => {
